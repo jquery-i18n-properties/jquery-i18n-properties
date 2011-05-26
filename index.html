@@ -66,12 +66,15 @@
 			var ex2 = 'msg_complex'; var ex2P = 'John';
 			var ex3 = 'msg_url'; var ex3P = 'solution_1';
 			var ex4 = 'inexistent_key';
+			var ex5 = 'msg_multi_placeholder'; var ex5P1 = 'beautiful'; var ex5P2 = 'fishing';
 			jQuery('#mapExamples')
 				.empty()
 				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex1+'\')</code>  -->  '+jQuery.i18n.prop(ex1)+'</li>')
-				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex2+'\',[\''+ex2P+'\'])</code>  -->  '+jQuery.i18n.prop(ex2, [ex2P])+'</li>')
-				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex3+'\',[\''+ex3P+'\'])</code>  -->  '+jQuery.i18n.prop(ex3, [ex3P])+'</li>')
-				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex4+'\')</code>  -->  '+jQuery.i18n.prop(ex4)+'</li>');
+				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex2+'\',\''+ex2P+'\')</code>  -->  '+jQuery.i18n.prop(ex2, ex2P)+'</li>')
+				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex3+'\',\''+ex3P+'\')</code>  -->  '+jQuery.i18n.prop(ex3, ex3P)+'</li>')
+				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex4+'\')</code>  -->  '+jQuery.i18n.prop(ex4)+'</li>')
+				.append('<li><code class="i18n">jQuery.i18n.prop(\''+ex5+'\',\''+ex5P1+'\',\''+ex5P2+'\')</code>  -->  '+jQuery.i18n.prop(ex5, ex5P1, ex5P2)+'</li>');
+				
 		
 			// Accessing values through a JS variable
 			var ex21 = 'msg_hello';
