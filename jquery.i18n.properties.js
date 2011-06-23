@@ -4,8 +4,9 @@
  * Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and 
  * MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses.
  * 
- * @version     1.0.x
+ * @version     1.1.x
  * @author      Nuno Fernandes
+ *              Matthew Lohbihler
  * @url         www.codingwithcoffee.com
  * @inspiration Localisation assistance for jQuery (http://keith-wood.name/localisation.html)
  *              by Keith Wood (kbwood{at}iinet.com.au) June 2007
@@ -91,16 +92,10 @@ $.i18n.prop = function(key /* Add parameters as function arguments as necessary 
 	if (value == null)
 		return '[' + key + ']';
 	
-//	if(arguments.length < 2) // No arguments.
-//    //if(key == 'spv.lbl.modified') {alert(value);}
-//		return value;
-	
-//	if (!$.isArray(placeHolderValues)) {
-//		// If placeHolderValues is not an array, make it into one.
-//		placeHolderValues = [placeHolderValues];
-//		for (var i=2; i<arguments.length; i++)
-//			placeHolderValues.push(arguments[i]);
-//	}
+	var phvList;
+	if (arguments.length == 2 && $.isArray(arguments[1]))
+		// An array was passed as the only parameter, so assume it is the list of place holder values.
+		phvList = arguments[1];
 
 	// Place holder replacement
 	/**
@@ -131,35 +126,35 @@ $.i18n.prop = function(key /* Add parameters as function arguments as necessary 
 		// active in quoted strings.
         i = 0;
         while ((i = value.indexOf('\\', i)) != -1) {
- 		   if (value[i+1] == 't')
- 			   value = value.substring(0, i) + '\t' + value.substring((i++) + 2); // tab
- 		   else if (value[i+1] == 'r')
- 			   value = value.substring(0, i) + '\r' + value.substring((i++) + 2); // return
- 		   else if (value[i+1] == 'n')
- 			   value = value.substring(0, i) + '\n' + value.substring((i++) + 2); // line feed
- 		   else if (value[i+1] == 'f')
- 			   value = value.substring(0, i) + '\f' + value.substring((i++) + 2); // form feed
- 		   else if (value[i+1] == '\\')
- 			   value = value.substring(0, i) + '\\' + value.substring((i++) + 2); // \
- 		   else
- 			   value = value.substring(0, i) + value.substring(i+1); // Quietly drop the character
+ 		    if (value.charAt(i+1) == 't')
+ 			    value = value.substring(0, i) + '\t' + value.substring((i++) + 2); // tab
+ 		    else if (value.charAt(i+1) == 'r')
+ 			    value = value.substring(0, i) + '\r' + value.substring((i++) + 2); // return
+ 		    else if (value.charAt(i+1) == 'n')
+ 			    value = value.substring(0, i) + '\n' + value.substring((i++) + 2); // line feed
+ 		    else if (value.charAt(i+1) == 'f')
+ 			    value = value.substring(0, i) + '\f' + value.substring((i++) + 2); // form feed
+ 		    else if (value.charAt(i+1) == '\\')
+ 			    value = value.substring(0, i) + '\\' + value.substring((i++) + 2); // \
+ 		    else
+ 			    value = value.substring(0, i) + value.substring(i+1); // Quietly drop the character
         }
 		
 		// Lazily convert the string to a list of tokens.
 		var arr = [], j, index;
 		i = 0;
 		while (i < value.length) {
-			if (value[i] == '\'') {
+			if (value.charAt(i) == '\'') {
 				// Handle quotes
 				if (i == value.length-1)
 					value = value.substring(0, i); // Silently drop the trailing quote
-				else if (value[i+1] == '\'')
+				else if (value.charAt(i+1) == '\'')
 					value = value.substring(0, i) + value.substring(++i); // Escaped quote
 				else {
 					// Quoted string
 					j = i + 2;
 					while ((j = value.indexOf('\'', j)) != -1) {
-						if (j == value.length-1 || value[j+1] != '\'') {
+						if (j == value.length-1 || value.charAt(j+1) != '\'') {
 							// Found start and end quotes. Remove them
 							value = value.substring(0,i) + value.substring(i+1, j) + value.substring(j+1);
 							i = j - 1;
@@ -177,7 +172,7 @@ $.i18n.prop = function(key /* Add parameters as function arguments as necessary 
 					}
 				}
 			}
-			else if (value[i] == '{') {
+			else if (value.charAt(i) == '{') {
 				// Beginning of an unquoted place holder.
 				j = value.indexOf('}', i+1);
 				if (j == -1)
@@ -223,7 +218,9 @@ $.i18n.prop = function(key /* Add parameters as function arguments as necessary 
 		if (typeof(value[i]) == "string")
 			s += value[i];
 		// Must be a number
-		else if (value[i] + 1 < arguments.length)
+		else if (phvList && value[i] < phvList.length)
+			s += phvList[value[i]];
+		else if (!phvList && value[i] + 1 < arguments.length)
 			s += arguments[value[i] + 1];
 		else
 			s += "{"+ value[i] +"}";
@@ -235,7 +232,7 @@ $.i18n.prop = function(key /* Add parameters as function arguments as necessary 
 /** Language reported by browser, normalized code */
 $.i18n.browserLang = function() {
 	return normaliseLanguageCode(navigator.language /* Mozilla */ || navigator.userLanguage /* IE */);
-}
+};
 
 
 /** Load and parse .properties files */
