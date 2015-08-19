@@ -21,10 +21,9 @@ This plugin was inspired on the [Localisation assistance for jQuery from Keith W
 
 ## History
 This project was originally created by [Nuno Miguel Correia Serra Fernandes](http://nunogrilo.com)
-and published on Google Code.  In 2014 it has been migrated to Github
-and the official repository is now:
+and published on Google Code. In 2014 it has been migrated to Github which is now the [official repository](https://github.com/jquery-i18n-properties/jquery-i18n-properties).
 
-  https://github.com/jquery-i18n-properties/jquery-i18n-properties
+Since then, other great contributors joined the project (see Credits section below).
 
 It has been used in various projects, including the [WebRTC phone JSCommunicator](http://jscommunicator.org) (see the demo there to
 see jquery-i18n-properties in action), some [Sakai Project](http://sakaiproject.org) tools, etc.
@@ -133,7 +132,14 @@ Option | Description | Notes
 **callback** | Callback function to be called uppon script execution completion. | Optional function() |
     
                     
-## Copyright and License
+## Copyright, Credits and License
 Copyright © 2011 Nuno Miguel Correia Serra Fernandes (nunogrilo.com)
 
-Licensed under the MIT License
+Special thanks to great contributors:
+
+* [Daniel Pocock](https://github.com/dpocock)
+* [mlohbihler](https://github.com/mlohbihler)
+* [Guillaume Gerbaud](https://github.com/ggerbaud)
+* [Adrian Fish](https://github.com/adrianfish)
+
+Licensed under the MIT License.
