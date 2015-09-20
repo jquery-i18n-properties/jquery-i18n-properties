@@ -236,20 +236,20 @@
     if (value.length == 1 && typeof(value[0]) == "string")
       return value[0];
 
-    s = "";
+    var str = "";
     for (i = 0; i < value.length; i++) {
       if (typeof(value[i]) == "string")
-        s += value[i];
+        str += value[i];
       // Must be a number
       else if (phvList && value[i] < phvList.length)
-        s += phvList[value[i]];
+        str += phvList[value[i]];
       else if (!phvList && value[i] + 1 < arguments.length)
-        s += arguments[value[i] + 1];
+        str += arguments[value[i] + 1];
       else
-        s += "{" + value[i] + "}";
+        str += "{" + value[i] + "}";
     }
 
-    return s;
+    return str;
   };
 
   /** Language reported by browser, normalized code */
