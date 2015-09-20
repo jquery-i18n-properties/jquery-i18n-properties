@@ -233,7 +233,7 @@
 
     if (value.length == 0)
       return "";
-    if (value.lengh == 1 && typeof(value[0]) == "string")
+    if (value.length == 1 && typeof(value[0]) == "string")
       return value[0];
 
     var s = "";
