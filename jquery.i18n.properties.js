@@ -276,8 +276,8 @@
   function parseData(data, mode) {
     var parsed = '';
     var parameters = data.split(/\n/);
-    var regPlaceHolder = /(\{\d+\})/g;
-    var regRepPlaceHolder = /\{(\d+)\}/g;
+    var regPlaceHolder = /(\{\d+})/g;
+    var regRepPlaceHolder = /\{(\d+)}/g;
     var unicodeRE = /(\\u.{4})/ig;
     for (var i = 0; i < parameters.length; i++) {
       parameters[i] = parameters[i].replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
