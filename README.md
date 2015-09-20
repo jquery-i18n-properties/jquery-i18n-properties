@@ -142,4 +142,4 @@ Special thanks to great contributors:
 * [Guillaume Gerbaud](https://github.com/ggerbaud)
 * [Adrian Fish](https://github.com/adrianfish)
 
-Licensed under the [MIT License](https://opensource.org/licenses/MIT).
+Licensed under the [MIT License](LICENSE).
