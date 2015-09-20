@@ -236,7 +236,7 @@
     if (value.length == 1 && typeof(value[0]) == "string")
       return value[0];
 
-    var s = "";
+    s = "";
     for (i = 0; i < value.length; i++) {
       if (typeof(value[i]) == "string")
         s += value[i];
@@ -285,7 +285,7 @@
         var pair = parameters[i].split('=');
         if (pair.length > 0) {
           /** Process key & value */
-          var name = unescape(pair[0]).replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
+          var name = decodeURI(pair[0]).replace(/^\s\s*/, '').replace(/\s\s*$/, ''); // trim
           var value = pair.length == 1 ? "" : pair[1];
           // process multi-line values
           while (value.match(/\\$/) == "\\") {
@@ -378,6 +378,7 @@
   /** Ensure language code is in the format aa_AA. */
   function normaliseLanguageCode(lang) {
     lang = lang.toLowerCase();
+    lang = lang.replace(/-/,"_"); // some browsers report language as en-US instead of en_US
     if (lang.length > 3) {
       lang = lang.substring(0, 3) + lang.substring(3).toUpperCase();
     }
@@ -420,12 +421,12 @@
           flags = (separator.ignoreCase ? "i" : "") +
               (separator.multiline ? "m" : "") +
               (separator.sticky ? "y" : ""),
-          separator = RegExp(separator.source, flags + "g"), // make `global` and avoid `lastIndex` issues by working with a copy
+          separator = new RegExp(separator.source, flags + "g"), // make `global` and avoid `lastIndex` issues by working with a copy
           separator2, match, lastIndex, lastLength;
 
       str = str + ""; // type conversion
       if (!cbSplit._compliantExecNpcg) {
-        separator2 = RegExp("^" + separator.source + "$(?!\\s)", flags); // doesn't need /g or /y, but they don't hurt
+        separator2 = new RegExp("^" + separator.source + "$(?!\\s)", flags); // doesn't need /g or /y, but they don't hurt
       }
 
       /* behavior for `limit`: if it's...
