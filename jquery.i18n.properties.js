@@ -77,6 +77,10 @@
           languages = data.languages;
       }
     });
+    
+    if (!languages) {
+      languages = [];
+    }
 
     // load and parse bundle files
     var files = getFiles(settings.name);
