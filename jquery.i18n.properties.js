@@ -65,21 +65,17 @@
       settings.language = '';
     }
 
-    var indexFileUrl = settings.path + 'languages.json';
-
     var languages = [];
 
-    $.ajax({
-      url: indexFileUrl,
-      async: false,
-      cache: false,
-      success: function (data, status) {
-          languages = data.languages;
-      }
-    });
-    
-    if (!languages) {
-      languages = [];
+    if (settings.checkAvailableLanguages) {
+      $.ajax({
+        url: settings.path + 'languages.json',
+        async: false,
+        cache: false,
+        success: function (data, status) {
+          languages = data.languages || [];
+        }
+      });
     }
 
     // load and parse bundle files
@@ -90,15 +86,15 @@
       // 2. with language code (eg, Messages_pt.properties)
       if (settings.language.length >= 2) {
         var shortCode = settings.language.substring(0, 2);
-        if (languages.length > 0 && $.inArray(shortCode, languages) != -1) {
-            loadAndParseFile(settings.path + files[i] + '_' + shortCode + '.properties', settings);
+        if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
+          loadAndParseFile(settings.path + files[i] + '_' + shortCode + '.properties', settings);
         }
       }
       // 3. with language code and country code (eg, Messages_pt_PT.properties)
       if (settings.language.length >= 5) {
         var longCode = settings.language.substring(0, 5);
-        if (languages.length > 0 && $.inArray(longCode, languages) != -1) {
-            loadAndParseFile(settings.path + files[i] + '_' + longCode + '.properties', settings);
+        if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
+          loadAndParseFile(settings.path + files[i] + '_' + longCode + '.properties', settings);
         }
       }
     }
