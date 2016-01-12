@@ -17,6 +17,7 @@ This plugin was inspired on the [Localisation assistance for jQuery from Keith W
 * Suport for namespaces in keys (eg, com.company.msgs.hello = Hello!)
 * Support for multi-line property values
 * Resource bundle keys available as Javascript vars/functions or as a map
+* Implemented languages can be specified to prevent unnecessary download attempts
 
 
 ## History
@@ -65,7 +66,8 @@ jQuery.i18n.properties({
     name:'Messages', 
     path:'bundle/', 
     mode:'both',
-    language:'pt_PT', 
+    language:'pt_PT',
+    checkAvailableLanguages: true,
     callback: function() {
         // We specified mode: 'both' so translated values will be
         // available as JS vars/functions and as a map
@@ -83,6 +85,37 @@ jQuery.i18n.properties({
 });
 ```
 This will initialize the plugin (loading bundle files and parsing them) and show a dialog box with the text “Olá World” and other with “Good morning John!”. The english word “World” is shown because we didn’t provide a translation for the `msg_world` key. Also notice that keys are available as a map and also as javascript variables (for simple strings) and javascript functions (for strings with placeholders for substitution).
+
+For more information on the 'checkAvailableLanguages' flag, see Implemented Languages Control.
+
+
+## Implemented Languages Control
+
+You can, optionally, defined which languages you have implemented and control which properties files are downloaded. You
+do this by creating a file, languages.json, in the same directory as your language properties files. languages.json
+contains a list of the language codes which have been implemented and that are available for download. The advantages to
+doing so are twofold:
+
+1. Less HTTP connections are made.
+2. There are less 404 errors in developer consoles
+
+Here's an example of a languages.json file:
+
+	{
+	    "languages": [
+	        "en_GB",
+	        "es_ES",
+	        "pt_PT",
+	        "sv_SE"
+	    ]
+	}
+
+Saving this as languages.json in the same directory as your properties files will prevent i18n from attempting to pull
+any languages other than the ones listed.
+
+There is one final thing you need to do to activate languages control: you need, in your calling code, to set a flag,
+checkAvailableLanguages, in the settings you pass to the i18n.properties function. If you don't do this, the default
+fall through behaviour for language lookup applies.
 
 
 ## Usage
