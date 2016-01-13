@@ -55,6 +55,8 @@
       mode: 'vars',
       cache: false,
       encoding: 'UTF-8',
+      async: false,
+      checkAvailableLanguages: false,
       callback: null
     };
     settings = $.extend(defaults, settings);
@@ -62,46 +64,71 @@
     // Try to ensure that we have at a least a two letter language code
     settings.language = this.normaliseLanguageCode(settings.language);
 
-    var languages = [];
+    var languagesFileLoadedCallback = function (languages) {
+
+      settings.totalFiles = 0;
+      settings.filesLoaded = 0;
+
+      // load and parse bundle files
+      var files = getFiles(settings.name);
+
+      if (settings.async) {
+        for (var i = 0, j = files.length; i < j; i++) {
+          // 1 for the base.
+          settings.totalFiles += 1;
+          // 2. with language code (eg, Messages_pt.properties)
+          var shortCode = settings.language.substring(0, 2);
+          if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
+            // 1 for the short code file
+            settings.totalFiles += 1;
+          }
+          // 3. with language code and country code (eg, Messages_pt_PT.properties)
+          if (settings.language.length >= 5) {
+            var longCode = settings.language.substring(0, 5);
+            if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
+              // 1 for the long code file
+              settings.totalFiles += 1;
+            }
+          }
+        }
+      }
+
+      for (var k = 0, m = files.length; k < m; k++) {
+        // 1. load base (eg, Messages.properties)
+        loadAndParseFile(settings.path + files[k] + '.properties', settings);
+        // 2. with language code (eg, Messages_pt.properties)
+        var shortCode = settings.language.substring(0, 2);
+        if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
+          loadAndParseFile(settings.path + files[k] + '_' + shortCode + '.properties', settings);
+        }
+        // 3. with language code and country code (eg, Messages_pt_PT.properties)
+        if (settings.language.length >= 5) {
+          var longCode = settings.language.substring(0, 5);
+          if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
+            loadAndParseFile(settings.path + files[k] + '_' + longCode + '.properties', settings);
+          }
+        }
+      }
+
+      // call callback
+      if (settings.callback && !settings.async) {
+        settings.callback();
+      }
+    };
 
     if (settings.checkAvailableLanguages) {
       $.ajax({
         url: settings.path + 'languages.json',
-        async: false,
+        async: settings.async,
         cache: false,
         success: function (data, status) {
-          languages = data.languages || [];
+          languagesFileLoadedCallback(data.languages || []);
         }
       });
-    }
-
-    // load and parse bundle files
-    var files = getFiles(settings.name);
-    for (var i = 0; i < files.length; i++) {
-      // 1. load base (eg, Messages.properties)
-      loadAndParseFile(settings.path + files[i] + '.properties', settings);
-      // 2. with language code (eg, Messages_pt.properties)
-      if (settings.language.length >= 2) {
-        var shortCode = settings.language.substring(0, 2);
-        if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
-          loadAndParseFile(settings.path + files[i] + '_' + shortCode + '.properties', settings);
-        }
-      }
-      // 3. with language code and country code (eg, Messages_pt_PT.properties)
-      if (settings.language.length >= 5) {
-        var longCode = settings.language.substring(0, 5);
-        if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
-          loadAndParseFile(settings.path + files[i] + '_' + longCode + '.properties', settings);
-        }
-      }
-    }
-
-    // call callback
-    if (settings.callback) {
-      settings.callback();
+    } else {
+      languagesFileLoadedCallback([]);
     }
   };
-
 
   /**
    * When configured with mode: 'map', allows access to bundle values by specifying its key.
@@ -251,14 +278,23 @@
 
   /** Load and parse .properties files */
   function loadAndParseFile(filename, settings) {
+
     $.ajax({
       url: filename,
-      async: false,
+      async: settings.async,
       cache: settings.cache,
       contentType: 'text/plain;charset=' + settings.encoding,
       dataType: 'text',
       success: function (data, status) {
         parseData(data, settings.mode);
+        if (settings.async) {
+          settings.filesLoaded += 1;
+          if (settings.filesLoaded === settings.totalFiles) {
+            if (settings.callback) {
+              settings.callback();
+            }
+          }
+        }
       }
     });
   }
