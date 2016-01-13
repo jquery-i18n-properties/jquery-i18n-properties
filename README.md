@@ -68,6 +68,7 @@ jQuery.i18n.properties({
     mode:'both',
     language:'pt_PT',
     checkAvailableLanguages: true,
+    async: true,
     callback: function() {
         // We specified mode: 'both' so translated values will be
         // available as JS vars/functions and as a map
@@ -101,14 +102,14 @@ doing so are twofold:
 
 Here's an example of a languages.json file:
 
-	{
-	    "languages": [
-	        "en_GB",
-	        "es_ES",
-	        "pt_PT",
-	        "sv_SE"
-	    ]
-	}
+    {
+        "languages": [
+            "en_GB",
+            "es_ES",
+            "pt_PT",
+            "sv_SE"
+        ]
+    }
 
 Saving this as languages.json in the same directory as your properties files will prevent i18n from attempting to pull
 any languages other than the ones listed.
@@ -116,6 +117,18 @@ any languages other than the ones listed.
 There is one final thing you need to do to activate languages control: you need, in your calling code, to set a flag,
 checkAvailableLanguages, in the settings you pass to the i18n.properties function. If you don't do this, the default
 fall through behaviour for language lookup applies.
+
+## Asynchronous Language File Loading
+
+Synchronous Ajax has now been deprecated and will be removed at some point in the future, so web developers need to
+start thinking about writing their code as callbacks (https://xhr.spec.whatwg.org/).
+
+With this in mind ...
+
+If you supply the flag 'async' on the settings and set it to true, all ajax calls are executed asynchronously and the
+supplied callback is called after the language files have all been downloaded and parsed. If you leave the flag off,
+or set it to false, the behaviour is as before: all the files are parsed synchronously and the callback is called at the
+end of the process.
 
 
 ## Usage
