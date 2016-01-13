@@ -254,7 +254,12 @@
 
   /** Language reported by browser, normalized code */
   $.i18n.browserLang = function () {
-    return normaliseLanguageCode(navigator.languages[0] /* Mozilla 32+ */ || navigator.language /* Mozilla */ || navigator.userLanguage /* IE */);
+
+    var language
+      = (navigator.languages) ? navigator.languages[0]
+        : (navigator.language || navigator.userLanguage /* IE */ || 'en');
+
+    return normaliseLanguageCode(language);
   };
 
 
