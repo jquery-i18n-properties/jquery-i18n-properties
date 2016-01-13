@@ -58,12 +58,9 @@
       callback: null
     };
     settings = $.extend(defaults, settings);
-    if (settings.language === null || settings.language == '') {
-      settings.language = $.i18n.browserLang();
-    }
-    if (settings.language === null) {
-      settings.language = '';
-    }
+
+    // Try to ensure that we have at a least a two letter language code
+    settings.language = this.normaliseLanguageCode(settings.language);
 
     var languages = [];
 
@@ -252,17 +249,6 @@
     return str;
   };
 
-  /** Language reported by browser, normalized code */
-  $.i18n.browserLang = function () {
-
-    var language
-      = (navigator.languages) ? navigator.languages[0]
-        : (navigator.language || navigator.userLanguage /* IE */ || 'en');
-
-    return normaliseLanguageCode(language);
-  };
-
-
   /** Load and parse .properties files */
   function loadAndParseFile(filename, settings) {
     $.ajax({
@@ -381,14 +367,20 @@
   }
 
   /** Ensure language code is in the format aa_AA. */
-  function normaliseLanguageCode(lang) {
+  $.i18n.normaliseLanguageCode = function (lang) {
+
+    if (!lang || lang.length < 2) {
+      lang = (navigator.languages) ? navigator.languages[0]
+                                        : (navigator.language || navigator.userLanguage /* IE */ || 'en');
+    }
+
     lang = lang.toLowerCase();
     lang = lang.replace(/-/,"_"); // some browsers report language as en-US instead of en_US
     if (lang.length > 3) {
       lang = lang.substring(0, 3) + lang.substring(3).toUpperCase();
     }
     return lang;
-  }
+  };
 
   /** Unescape unicode chars ('\u00e3') */
   function unescapeUnicode(str) {
