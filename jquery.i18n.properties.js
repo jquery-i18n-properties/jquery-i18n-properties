@@ -283,7 +283,6 @@
       url: filename,
       async: settings.async,
       cache: settings.cache,
-      contentType: 'text/plain;charset=' + settings.encoding,
       dataType: 'text',
       success: function (data, status) {
         parseData(data, settings.mode);
