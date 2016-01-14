@@ -121,7 +121,7 @@
         url: settings.path + 'languages.json',
         async: settings.async,
         cache: false,
-        success: function (data, status) {
+        success: function (data, textStatus, jqXHR) {
           languagesFileLoadedCallback(data.languages || []);
         }
       });
@@ -276,6 +276,18 @@
     return str;
   };
 
+  function callbackIfComplete(settings) {
+
+      if (settings.async) {
+        settings.filesLoaded += 1;
+        if (settings.filesLoaded === settings.totalFiles) {
+          if (settings.callback) {
+            settings.callback();
+          }
+        }
+      }
+  }
+
   /** Load and parse .properties files */
   function loadAndParseFile(filename, settings) {
 
@@ -285,15 +297,13 @@
       cache: settings.cache,
       dataType: 'text',
       success: function (data, status) {
+
         parseData(data, settings.mode);
-        if (settings.async) {
-          settings.filesLoaded += 1;
-          if (settings.filesLoaded === settings.totalFiles) {
-            if (settings.callback) {
-              settings.callback();
-            }
-          }
-        }
+        callbackIfComplete(settings);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log('Failed to download or parse ' + filename);
+        callbackIfComplete(settings);
       }
     });
   }
