@@ -82,7 +82,7 @@
             // 1 for the short code file
             settings.totalFiles += 1;
           }
-          // 3. with language code and country code (eg, Messages_pt_PT.properties)
+          // 3. with language code and country code (eg, Messages_pt_BR.properties)
           if (settings.language.length >= 5) {
             var longCode = settings.language.substring(0, 5);
             if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
@@ -101,7 +101,7 @@
         if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
           loadAndParseFile(settings.path + files[k] + '_' + shortCode + '.properties', settings);
         }
-        // 3. with language code and country code (eg, Messages_pt_PT.properties)
+        // 3. with language code and country code (eg, Messages_pt_BR.properties)
         if (settings.language.length >= 5) {
           var longCode = settings.language.substring(0, 5);
           if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
