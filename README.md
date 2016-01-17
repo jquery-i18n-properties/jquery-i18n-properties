@@ -11,7 +11,7 @@ This plugin was inspired on the [Localisation assistance for jQuery from Keith W
 ## Features
 * Use Java standard ‘.properties‘ files for translations
 * Use standard ISO-639 for language code and ISO-3166 for country code
-* Sequential loading of resource bundles from base language to user-specified/browser-specified so there is always a default value for an untranslated string (eg: msg.properties, msg_pt.properties, msg_pt_PT.properties)
+* Sequential loading of resource bundles from base language to user-specified/browser-specified so there is always a default value for an untranslated string (eg: msg.properties, msg_pt.properties, msg_pt_BR.properties)
 * Use browser reported language if no language was specified
 * Placeholder substitution in resource bundle strings (eg, msg_hello = Hello {0}!!)
 * Suport for namespaces in keys (eg, com.company.msgs.hello = Hello!)
@@ -66,7 +66,7 @@ jQuery.i18n.properties({
     name:'Messages', 
     path:'bundle/', 
     mode:'both',
-    language:'pt_PT',
+    language:'pt_BR',
     checkAvailableLanguages: true,
     async: true,
     callback: function() {
@@ -106,7 +106,7 @@ Here's an example of a languages.json file:
         "languages": [
             "en_GB",
             "es_ES",
-            "pt_PT",
+            "pt_BR",
             "sv_SE"
         ]
     }
@@ -170,7 +170,7 @@ end of the process.
 Option | Description | Notes
 ------ | ----------- | -----
 **name**   | Partial name (or names) of files representing resource bundles (eg, ‘Messages’ or ['Msg1','Msg2']). Defaults to 'Messages' | Optional String or String[] |
-**language** | ISO-639 Language code and, optionally, ISO-3166 country code (eg, ‘en’, ‘en_US’, ‘pt_PT’). If not specified, language reported by the browser will be used instead. | Optional String |
+**language** | ISO-639 Language code and, optionally, ISO-3166 country code (eg, ‘en’, ‘en_US’, ‘pt_BR’). If not specified, language reported by the browser will be used instead. | Optional String |
 **path** | Path to directory that contains ‘.properties‘ files to load. | Optional String |
 **mode** | Option to have resource bundle keys available as Javascript vars/functions OR as a map. The ‘map’ option is mandatory if your bundle keys contain Javascript Reserved Words. Possible options: ‘vars’ (default), ‘map’ or ‘both’. | Optional String |
 **cache** | Whether bundles should be cached by the browser, or forcibly reloaded on each page load. Defaults to false (i.e. forcibly reloaded). | Optional boolean |
