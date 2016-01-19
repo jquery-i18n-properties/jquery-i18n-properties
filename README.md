@@ -11,7 +11,7 @@ This plugin was inspired on the [Localisation assistance for jQuery from Keith W
 ## Features
 * Use Java standard ‘.properties‘ files for translations
 * Use standard ISO-639 for language code and ISO-3166 for country code
-* Sequential loading of resource bundles from base language to user-specified/browser-specified so there is always a default value for an untranslated string (eg: msg.properties, msg_pt.properties, msg_pt_BR.properties)
+* Sequential loading of resource bundles from base language to user-specified/browser-specified so there is always a default value for an untranslated string (eg: Messages.properties, Messages_pt.properties, Messages_pt_BR.properties)
 * Use browser reported language if no language was specified
 * Placeholder substitution in resource bundle strings (eg, msg_hello = Hello {0}!!)
 * Suport for namespaces in keys (eg, com.company.msgs.hello = Hello!)
@@ -49,7 +49,7 @@ msg_complex = Good morning {0}!
 msg_hello = Bom dia
 ```
 
-**Messages\_pt\_PT.properties:**
+**Messages\_pt\_BR.properties:**
 
 ```ini
 # We only provide a translation for the 'msg_hello' key
