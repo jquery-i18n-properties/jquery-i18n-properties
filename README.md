@@ -7,6 +7,10 @@ Resource bundles are ‘.properties‘ files containing locale specific key-valu
 
 This plugin was inspired on the [Localisation assistance for jQuery from Keith Wood](http://web.archive.org/web/20140517213544/http://keith-wood.name/localisation.html).
 
+## Latest Version
+
+1.2.2
+
 
 ## Features
 * Use Java standard ‘.properties‘ files for translations
