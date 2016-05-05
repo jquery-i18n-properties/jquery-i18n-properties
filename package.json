@@ -1,0 +1,33 @@
+{
+  "name": "jquery-i18n-properties",
+  "version": "1.2.2",
+  "description": "Library for internationalising JS apps",
+  "main": "Library for internationalising JS apps",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "checkKeyNamespaceTest.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michogar/jquery-i18n-properties.git"
+  },
+  "keywords": [
+    "jquery",
+    "i18n"
+  ],
+  "authors": [
+    "Nuno Grilo <nfgrilo@gmail.com>",
+    "Daniel Pocock <daniel@pocock.pro>",
+    "Adrian Fish <adrian.r.fish@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michogar/jquery-i18n-properties/issues"
+  },
+  "homepage": "https://github.com/michogar/jquery-i18n-properties#readme",
+  "dependencies": {
+    "jquery": "^1.9.1"
+  }
+}
