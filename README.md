@@ -146,7 +146,7 @@ end of the process.
   src="js/jquery.i18n.properties-min.js"></script>
 ```
 
-2. Initialize the plugin (minimal usage, will use language reported by browser), and access a translated value (assuming a key named ‘org.somekey‘ exists):
+2. Initialize the plugin (minimal usage, will use language reported by browser), and access a translated value (assuming a key named ‘org.somekey‘ exists, it will be setup as a variable you can use directly in your Javascript):
 
 ```html
 <script>
@@ -156,6 +156,15 @@ end of the process.
 	});
 </script>
 ```
+
+### Additional requirement on Firefox
+If using Firefox and a Tomcat webapp, you may get a `syntax error` in the Javascript console. The solution is to tell Tomcat the properties files should be interpreted as `text/plain`. To do this, add the following to your web.xml:
+`
+<mime-mapping> 
+        <extension>properties</extension>
+        <mime-type>text/plain</mime-type> 
+</mime-mapping>
+`
 
 ### Building a minified JavaScript file
 
