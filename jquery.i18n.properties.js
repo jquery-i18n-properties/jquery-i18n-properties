@@ -72,40 +72,48 @@
 
       if (settings.async) {
         for (var i = 0, j = files.length; i < j; i++) {
-          // 1 for the base.
-          settings.totalFiles += 1;
-          // 2. with language code (eg, Messages_pt.properties)
-          var shortCode = settings.language.substring(0, 2);
-          if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
-            // 1 for the short code file
-            settings.totalFiles += 1;
-          }
-          // 3. with language code and country code (eg, Messages_pt_BR.properties)
+          
+          // 1. with language code and country code (eg, Messages_pt_BR.properties)
           if (settings.language.length >= 5) {
             var longCode = settings.language.substring(0, 5);
             if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
               // 1 for the long code file
               settings.totalFiles += 1;
             }
+          } else {
+            // 2. with language code (eg, Messages_pt.properties)
+            var shortCode = settings.language.substring(0, 2);
+            if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
+              // 1 for the short code file
+              settings.totalFiles += 1;
+            }
+          } else {
+            // 3 for the base.
+            settings.totalFiles += 1;
           }
+          
         }
       }
 
       for (var k = 0, m = files.length; k < m; k++) {
-        // 1. load base (eg, Messages.properties)
-        loadAndParseFile(settings.path + files[k] + '.properties', settings);
-        // 2. with language code (eg, Messages_pt.properties)
-        var shortCode = settings.language.substring(0, 2);
-        if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
-          loadAndParseFile(settings.path + files[k] + '_' + shortCode + '.properties', settings);
-        }
-        // 3. with language code and country code (eg, Messages_pt_BR.properties)
+        
+        // 1. with language code and country code (eg, Messages_pt_BR.properties)
         if (settings.language.length >= 5) {
           var longCode = settings.language.substring(0, 5);
           if (languages.length == 0 || $.inArray(longCode, languages) != -1) {
             loadAndParseFile(settings.path + files[k] + '_' + longCode + '.properties', settings);
           }
+        } else {
+          // 2. with language code (eg, Messages_pt.properties)
+          var shortCode = settings.language.substring(0, 2);
+          if (languages.length == 0 || $.inArray(shortCode, languages) != -1) {
+            loadAndParseFile(settings.path + files[k] + '_' + shortCode + '.properties', settings);
+          }
+        } else {
+          // 3. load base (eg, Messages.properties)
+          loadAndParseFile(settings.path + files[k] + '.properties', settings);
         }
+        
       }
 
       // call callback
