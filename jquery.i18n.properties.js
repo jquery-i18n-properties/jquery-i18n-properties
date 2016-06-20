@@ -119,6 +119,7 @@
         url: settings.path + 'languages.json',
         async: settings.async,
         cache: false,
+        dataType: 'json',
         success: function (data, textStatus, jqXHR) {
           languagesFileLoadedCallback(data.languages || []);
         }
