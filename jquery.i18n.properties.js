@@ -54,6 +54,7 @@
       cache: false,
       encoding: 'UTF-8',
       async: false,
+      availableLanguages:[],
       checkAvailableLanguages: false,
       callback: null
     };
@@ -90,7 +91,7 @@
           }
         }
       }
-      var defaultFileName, shortFileName, longFilename;
+      var defaultFileName, shortFileName, longFileName;
       for (var k = 0, m = files.length; k < m; k++) {
         // 1. load base (eg, Messages.properties)
         defaultFileName = settings.path + files[k] + '.properties';
@@ -126,7 +127,7 @@
         }
       });
     } else {
-      languagesFileLoadedCallback([]);
+      languagesFileLoadedCallback(settings.availableLanguages);
     }
   };
 
@@ -288,7 +289,7 @@
       }
   }
 
-  
+
   function loadAndParseFiles(filenames, settings) {
 	  if (filenames!=null && filenames.length > 0) {
 		  loadAndParseFile(filenames[0],settings,function(){
@@ -297,7 +298,7 @@
 		  });
 	  }
   }
-  
+
   /** Load and parse .properties files */
   function loadAndParseFile(filename, settings,next) {
   	if (filename!=null) {
