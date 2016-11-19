@@ -111,8 +111,7 @@
           }
         }
         loadAndParseFiles(fileNameArr, settings);
-        defaultFileName = shortFileName = longFileName = null;
-	fileNameArr = [];
+        defaultFileName = shortFileName = longFileName = fileNameArr = null;
       }
 
       // call callback
