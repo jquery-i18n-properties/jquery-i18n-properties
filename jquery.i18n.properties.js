@@ -90,7 +90,7 @@
           }
         }
       }
-      var defaultFileName, shortFileName, longFilename;
+      var defaultFileName, shortFileName, longFileName;
       var fileNameArr = [];
       for (var k = 0, m = files.length; k < m; k++) {
         // 1. load base (eg, Messages.properties)
