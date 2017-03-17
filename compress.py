@@ -22,7 +22,7 @@ response = conn.getresponse()
 data = response.read()
 
 #print data
-f2 = open('jquery.i18n.properties-min.js', 'w')
+f2 = open('jquery.i18n.properties.min.js', 'w')
 f2.write(data)
 
 conn.close
