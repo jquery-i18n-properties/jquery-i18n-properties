@@ -63,12 +63,12 @@ msg_hello = Olá
 Now, suppose these files are located on the ``bundle/`` folder. One can invoke the plugin like below:
 
 ```javascript
-// This will initialize the plugin 
+// This will initialize the plugin
 // and show two dialog boxes: one with the text "Olá World"
-// and other with the text "Good morning John!" 
+// and other with the text "Good morning John!"
 jQuery.i18n.properties({
-    name:'Messages', 
-    path:'bundle/', 
+    name:'Messages',
+    path:'bundle/',
     mode:'both',
     language:'pt_BR',
     checkAvailableLanguages: true,
@@ -122,6 +122,21 @@ There is one final thing you need to do to activate languages control: you need,
 checkAvailableLanguages, in the settings you pass to the i18n.properties function. If you don't do this, the default
 fall through behaviour for language lookup applies.
 
+You can also set languages directly in your code without Ajax call by using availableLanguages properties
+
+```javascript
+// This will initialize the plugin
+// and show two dialog boxes: one with the text "Olá World"
+// and other with the text "Good morning John!"
+jQuery.i18n.properties({
+    name:'Messages',
+    path:'bundle/',
+    mode:'both',
+    language:'pt_BR',
+    availableLanguages: ['en','en-US','fr']
+});
+```
+
 ## Asynchronous Language File Loading
 
 Synchronous Ajax has now been deprecated and will be removed at some point in the future, so web developers need to
@@ -151,7 +166,7 @@ end of the process.
 ```html
 <script>
 	jQuery.i18n.properties({
-  		name: 'Messages', 
+  		name: 'Messages',
   		callback: function(){ alert( org.somekey ); }
 	});
 </script>
@@ -160,9 +175,9 @@ end of the process.
 ### Additional requirement on Firefox
 If using Firefox and a Tomcat webapp, you may get a `syntax error` in the Javascript console. The solution is to tell Tomcat the properties files should be interpreted as `text/plain`. To do this, add the following to your web.xml:
 `
-<mime-mapping> 
+<mime-mapping>
         <extension>properties</extension>
-        <mime-type>text/plain</mime-type> 
+        <mime-type>text/plain</mime-type>
 </mime-mapping>
 `
 
@@ -176,7 +191,7 @@ If using Firefox and a Tomcat webapp, you may get a `syntax error` in the Javasc
 
    ``closure-compiler --js jquery.i18n.properties.js \
                     --js_output_file jquery.i18n.properties.min.js``
-   
+
 
 ### Options             
 
@@ -189,8 +204,8 @@ Option | Description | Notes
 **cache** | Whether bundles should be cached by the browser, or forcibly reloaded on each page load. Defaults to false (i.e. forcibly reloaded). | Optional boolean |
 **encoding** | The encoding to request for bundles. Property file resource bundles are specified to be in ISO-8859-1 format. Defaults to UTF-8 for backward compatibility. | Optional String |
 **callback** | Callback function to be called uppon script execution completion. | Optional function() |
-    
-                    
+
+
 ## Copyright, Credits and License
 Copyright © 2011 Nuno Miguel Correia Serra Fernandes (nunogrilo.com)
 

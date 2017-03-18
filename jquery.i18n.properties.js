@@ -54,6 +54,7 @@
       cache: false,
       encoding: 'UTF-8',
       async: false,
+      availableLanguages:[],
       checkAvailableLanguages: false,
       callback: null
     };
@@ -127,7 +128,7 @@
         }
       });
     } else {
-      languagesFileLoadedCallback([]);
+      languagesFileLoadedCallback(settings.availableLanguages);
     }
   };
 
@@ -289,7 +290,7 @@
       }
   }
 
-  
+
   function loadAndParseFiles(filenames, settings) {
 	  if (filenames!=null && filenames.length > 0) {
 		  loadAndParseFile(filenames[0],settings,function(){
@@ -298,7 +299,7 @@
 		  });
 	  }
   }
-  
+
   /** Load and parse .properties files */
   function loadAndParseFile(filename, settings,next) {
   	if (filename!=null) {
