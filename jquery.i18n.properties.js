@@ -315,6 +315,7 @@
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log('Failed to download or parse ' + filename);
+        next();
         callbackIfComplete(settings);
       }
      });
