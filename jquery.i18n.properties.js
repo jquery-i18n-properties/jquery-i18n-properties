@@ -4,7 +4,7 @@
  * Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and
  * MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses.
  *
- * @version     1.2.2
+ * @version     1.2.3
  * @url         https://github.com/jquery-i18n-properties/jquery-i18n-properties
  * @inspiration Localisation assistance for jQuery (http://keith-wood.name/localisation.html)
  *              by Keith Wood (kbwood{at}iinet.com.au) June 2007
