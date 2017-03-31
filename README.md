@@ -9,7 +9,7 @@ This plugin was inspired on the [Localisation assistance for jQuery from Keith W
 
 ## Latest Version
 
-1.2.3
+1.2.4
 
 
 ## Features
