@@ -21,7 +21,6 @@ This plugin was inspired on the [Localisation assistance for jQuery from Keith W
 * Suport for namespaces in keys (eg, com.company.msgs.hello = Hello!)
 * Support for multi-line property values
 * Resource bundle keys available as Javascript vars/functions or as a map
-* Implemented languages can be specified to prevent unnecessary download attempts
 
 
 ## History
