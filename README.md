@@ -153,6 +153,7 @@ Option | Description | Notes
 **language** | ISO-639 Language code and, optionally, ISO-3166 country code (eg, ‘en’, ‘en_US’, ‘pt_BR’). If not specified, language reported by the browser will be used instead. | Optional String |
 **path** | Path to directory that contains ‘.properties‘ files to load. | Optional String |
 **mode** | Option to have resource bundle keys available as Javascript vars/functions OR as a map. The ‘map’ option is mandatory if your bundle keys contain Javascript Reserved Words. Possible options: ‘vars’ (default), ‘map’ or ‘both’. | Optional String |
+**debug** | Option to turn on console debug statement. Possible options: true or false. | Optional boolean |
 **cache** | Whether bundles should be cached by the browser, or forcibly reloaded on each page load. Defaults to false (i.e. forcibly reloaded). | Optional boolean |
 **encoding** | The encoding to request for bundles. Property file resource bundles are specified to be in ISO-8859-1 format. Defaults to UTF-8 for backward compatibility. | Optional String |
 **callback** | Callback function to be called uppon script execution completion. | Optional function() |
