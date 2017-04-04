@@ -267,7 +267,7 @@
             }
         }
     }
-  
+
     function loadAndParseFiles(filenames, settings) {
 
 	    if (filenames !== null && filenames.length > 0) {
@@ -279,7 +279,7 @@
             callbackIfComplete(settings);
         }
     }
-  
+
     /** Load and parse .properties files */
     function loadAndParseFile(filename, settings, next) {
 
@@ -289,7 +289,7 @@
             console.log('filesLoaded: ' + settings.filesLoaded);
         }
 
-  	    if (filename !== null) {
+  	    if (filename !== null && typeof filename !== 'undefined') {
             $.ajax({
                 url: filename,
                 async: settings.async,
