@@ -303,7 +303,6 @@
 
                     parseData(data, settings);
                     next();
-                    callbackIfComplete(settings);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
 
