@@ -18,6 +18,10 @@
     /** Map holding bundle keys (if mode: 'map') */
     $.i18n.map = {};
 
+    var debug = function (message) {
+        console.log('i18n::' + message);
+    };
+
     /**
      * Load and parse message bundle files (.properties),
      * making bundles keys available as javascript variables.
@@ -61,6 +65,9 @@
         };
         settings = $.extend(defaults, settings);
 
+        // Ensure a trailing slash
+        if (!settings.path.match(/\/$/)) settings.path += '/';
+
         // Try to ensure that we have at a least a two letter language code
         settings.language = this.normaliseLanguageCode(settings.language);
 
@@ -71,7 +78,7 @@
         // we also have a country code, thats an extra file per name.
         settings.totalFiles = (files.length * 2) + ((settings.language.length >= 5) ? files.length : 0);
         if (settings.debug) {
-            console.log('totalFiles: ' + settings.totalFiles);
+            debug('totalFiles: ' + settings.totalFiles);
         }
 
         settings.filesLoaded = 0;
@@ -254,9 +261,9 @@
     function callbackIfComplete(settings) {
 
         if (settings.debug) {
-            console.log('callbackIfComplete()');
-            console.log('totalFiles: ' + settings.totalFiles);
-            console.log('filesLoaded: ' + settings.filesLoaded);
+            debug('callbackIfComplete()');
+            debug('totalFiles: ' + settings.totalFiles);
+            debug('filesLoaded: ' + settings.filesLoaded);
         }
 
         if (settings.async) {
@@ -270,6 +277,8 @@
 
     function loadAndParseFiles(filenames, settings) {
 
+        if (settings.debug) debug('loadAndParseFiles');
+
 	    if (filenames !== null && filenames.length > 0) {
 		    loadAndParseFile(filenames[0], settings, function () {
 			    filenames.shift();
@@ -281,12 +290,12 @@
     }
 
     /** Load and parse .properties files */
-    function loadAndParseFile(filename, settings, next) {
+    function loadAndParseFile(filename, settings, nextFile) {
 
         if (settings.debug) {
-            console.log('loadAndParseFile()');
-            console.log('totalFiles: ' + settings.totalFiles);
-            console.log('filesLoaded: ' + settings.filesLoaded);
+            debug('loadAndParseFile(\'' + filename +'\')');
+            debug('totalFiles: ' + settings.totalFiles);
+            debug('filesLoaded: ' + settings.filesLoaded);
         }
 
   	    if (filename !== null && typeof filename !== 'undefined') {
@@ -298,22 +307,22 @@
                 success: function (data, status) {
 
                     if (settings.debug) {
-                        console.log('Succeeded in downloading ' + filename + '.');
+                        debug('Succeeded in downloading ' + filename + '.');
+                        debug(data);
                     }
 
                     parseData(data, settings);
-                    next();
-                    callbackIfComplete(settings);
+                    nextFile();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
 
                     if (settings.debug) {
-                        console.log('Failed to download or parse ' + filename + '. errorThrown: ' + errorThrown);
+                        debug('Failed to download or parse ' + filename + '. errorThrown: ' + errorThrown);
                     }
                     if (jqXHR.status === 404) {
                         settings.totalFiles -= 1;
                     }
-                    next();
+                    nextFile();
                 }
             });
         }
@@ -323,23 +332,23 @@
     function parseData(data, settings) {
 
         var parsed = '';
-        var parameters = data.split(/\n/);
+        var lines = data.split(/\n/);
         var regPlaceHolder = /(\{\d+})/g;
         var regRepPlaceHolder = /\{(\d+)}/g;
         var unicodeRE = /(\\u.{4})/ig;
-        for (var i = 0, j = parameters.length; i < j; i++) {
-            var test = parameters[i].trim();
-            parameters[i] = parameters[i].trim();
-            if (parameters[i].length > 0 && parameters[i].match("^#") != "#") { // skip comments
-                var pair = parameters[i].split('=');
+        lines.forEach(function (line, i) {
+
+            line = line.trim();
+            if (line.length > 0 && line.match("^#") != "#") { // skip comments
+                var pair = line.split('=');
                 if (pair.length > 0) {
                     /** Process key & value */
                     var name = decodeURI(pair[0]).trim();
                     var value = pair.length == 1 ? "" : pair[1];
                     // process multi-line values
-                    while (value.match(/\\$/) == "\\") {
+                    while (value.match(/\\$/) === "\\") {
                         value = value.substring(0, value.length - 1);
-                        value += parameters[++i].trimRight();
+                        value += lines[++i].trimRight();
                     }
                     // Put values with embedded '='s back together
                     for (var s = 2; s < pair.length; s++) {
@@ -396,7 +405,7 @@
                     } // END: Mode: bundle keys as vars/functions
                 } // END: if(pair.length > 0)
             } // END: skip comments
-        }
+        });
         eval(parsed);
         settings.filesLoaded += 1;
     }
