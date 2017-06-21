@@ -85,7 +85,7 @@
 
         files.forEach(function (file) {
 
-            var defaultFileName, shortFileName, longFileName;
+            var defaultFileName, shortFileName, longFileName, filenames;
             // 1. load base (eg, Messages.properties)
             defaultFileName = settings.path + file + '.properties';
             // 2. with language code (eg, Messages_pt.properties)
