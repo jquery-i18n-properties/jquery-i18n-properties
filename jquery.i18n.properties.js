@@ -95,8 +95,11 @@
             if (settings.language.length >= 5) {
                 var longCode = settings.language.substring(0, 5);
                 longFileName = settings.path + file + '_' + longCode + '.properties';
+                filenames = [defaultFileName, shortFileName, longFileName];
+            } else {
+                filenames = [defaultFileName, shortFileName];
             }
-            loadAndParseFiles([defaultFileName, shortFileName, longFileName], settings);
+            loadAndParseFiles(filenames, settings);
         });
 
         // call callback
