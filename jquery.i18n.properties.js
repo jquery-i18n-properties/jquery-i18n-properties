@@ -435,7 +435,7 @@
     $.i18n.normaliseLanguageCode = function (lang) {
 
         if (!lang || lang.length < 2) {
-            lang = (navigator.languages) ? navigator.languages[0]
+            lang = (navigator.languages && navigator.languages.length > 0) ? navigator.languages[0]
                                         : (navigator.language || navigator.userLanguage /* IE */ || 'en');
         }
 
