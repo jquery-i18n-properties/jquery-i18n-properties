@@ -85,7 +85,7 @@
 
         files.forEach(function (file) {
 
-            var defaultFileName, shortFileName, longFileName;
+            var defaultFileName, shortFileName, longFileName, filenames;
             // 1. load base (eg, Messages.properties)
             defaultFileName = settings.path + file + '.properties';
             // 2. with language code (eg, Messages_pt.properties)
@@ -95,8 +95,11 @@
             if (settings.language.length >= 5) {
                 var longCode = settings.language.substring(0, 5);
                 longFileName = settings.path + file + '_' + longCode + '.properties';
+                filenames = [defaultFileName, shortFileName, longFileName];
+            } else {
+                filenames = [defaultFileName, shortFileName];
             }
-            loadAndParseFiles([defaultFileName, shortFileName, longFileName], settings);
+            loadAndParseFiles(filenames, settings);
         });
 
         // call callback
