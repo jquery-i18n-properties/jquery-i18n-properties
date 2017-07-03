@@ -85,18 +85,19 @@
 
         files.forEach(function (file) {
 
-            var defaultFileName, shortFileName, longFileName;
+            var filenames = [];
             // 1. load base (eg, Messages.properties)
-            defaultFileName = settings.path + file + '.properties';
+            filenames.push(settings.path + file + '.properties');
             // 2. with language code (eg, Messages_pt.properties)
             var shortCode = settings.language.substring(0, 2);
-            shortFileName = settings.path + file + '_' + shortCode + '.properties';
+            filenames.push(settings.path + file + '_' + shortCode + '.properties');
             // 3. with language code and country code (eg, Messages_pt_BR.properties)
             if (settings.language.length >= 5) {
                 var longCode = settings.language.substring(0, 5);
-                longFileName = settings.path + file + '_' + longCode + '.properties';
+                filenames.push(settings.path + file + '_' + longCode + '.properties');
             }
-            loadAndParseFiles([defaultFileName, shortFileName, longFileName], settings);
+            loadAndParseFiles(filenames, settings);
+
         });
 
         // call callback
@@ -304,6 +305,10 @@
                 async: settings.async,
                 cache: settings.cache,
                 dataType: 'text',
+                contentType: 'Content-type: text/plain; charset=' + settings.encoding,
+                beforeSend: function(jqXHR) {
+                    jqXHR.overrideMimeType('text/html;charset=' + settings.encoding);
+                },
                 success: function (data, status) {
 
                     if (settings.debug) {
