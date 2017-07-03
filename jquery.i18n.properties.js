@@ -19,7 +19,7 @@
     $.i18n.map = {};
 
     var debug = function (message) {
-        console.log('i18n::' + message);
+        window.console && console.log('i18n::' + message);
     };
 
     /**
