@@ -85,7 +85,7 @@
 
         files.forEach(function (file) {
 
-            var defaultFileName, shortFileName, longFileName, filenames;
+            var defaultFileName, shortFileName, longFileName, fileNames;
             // 1. load base (eg, Messages.properties)
             defaultFileName = settings.path + file + '.properties';
             // 2. with language code (eg, Messages_pt.properties)
@@ -95,11 +95,11 @@
             if (settings.language.length >= 5) {
                 var longCode = settings.language.substring(0, 5);
                 longFileName = settings.path + file + '_' + longCode + '.properties';
-                filenames = [defaultFileName, shortFileName, longFileName];
+                fileNames = [defaultFileName, shortFileName, longFileName];
             } else {
-                filenames = [defaultFileName, shortFileName];
+                fileNames = [defaultFileName, shortFileName];
             }
-            loadAndParseFiles(filenames, settings);
+            loadAndParseFiles(fileNames, settings);
         });
 
         // call callback
@@ -278,14 +278,14 @@
         }
     }
 
-    function loadAndParseFiles(filenames, settings) {
+    function loadAndParseFiles(fileNames, settings) {
 
         if (settings.debug) debug('loadAndParseFiles');
 
-	    if (filenames !== null && filenames.length > 0) {
-		    loadAndParseFile(filenames[0], settings, function () {
-			    filenames.shift();
-			    loadAndParseFiles(filenames,settings);
+	    if (fileNames !== null && fileNames.length > 0) {
+		    loadAndParseFile(fileNames[0], settings, function () {
+			    fileNames.shift();
+			    loadAndParseFiles(fileNames,settings);
 		    });
 	    } else {
             callbackIfComplete(settings);
