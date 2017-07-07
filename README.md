@@ -21,6 +21,7 @@ This plugin was inspired on the [Localisation assistance for jQuery from Keith W
 * Suport for namespaces in keys (eg, com.company.msgs.hello = Hello!)
 * Support for multi-line property values
 * Resource bundle keys available as Javascript vars/functions or as a map
+* Support for namespacing.
 
 
 ## History
@@ -152,6 +153,7 @@ Option | Description | Notes
 **name**   | Partial name (or names) of files representing resource bundles (eg, ‘Messages’ or ['Msg1','Msg2']). Defaults to 'Messages' | Optional String or String[] |
 **language** | ISO-639 Language code and, optionally, ISO-3166 country code (eg, ‘en’, ‘en_US’, ‘pt_BR’). If not specified, language reported by the browser will be used instead. | Optional String |
 **path** | Path to directory that contains ‘.properties‘ files to load. | Optional String |
+**namespace** | The namespace that you want your keys to be stored under. You'd access these keys like this: $.i18n.map\[namespace\]\[key\]. Using a namespace minimises the chances of key clashes and overwrites. | Optional String |
 **mode** | Option to have resource bundle keys available as Javascript vars/functions OR as a map. The ‘map’ option is mandatory if your bundle keys contain Javascript Reserved Words. Possible options: ‘vars’ (default), ‘map’ or ‘both’. | Optional String |
 **debug** | Option to turn on console debug statement. Possible options: true or false. | Optional boolean |
 **cache** | Whether bundles should be cached by the browser, or forcibly reloaded on each page load. Defaults to false (i.e. forcibly reloaded). | Optional boolean |
