@@ -1,64 +1,66 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-<HTML>
-   <HEAD>
-      <title>jQuery.i18n.properties: Tests</title>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <meta http-equiv="content-script-type" content="text/javascript" />
-      
-      	<!-- JS -->
-      	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-      	<script type="text/javascript" src="../jquery.i18n.properties.js"></script>
-      	
-      	<!-- CSS -->
-        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print">	
-		<!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-      	<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen, projection">
-		
-      
-      <script type="text/javascript">
-      	// load I18N bundles
-		jQuery(document).ready(function() {
-			jQuery.i18n.properties({
-			    name:'Messages', 
-			    path:'./', 
-			    mode:'both', 
-			    callback: function() {
-			        // callback
-			        test('one.two.three');
-			        test('one.two.four');
-			        test('one.three.three');
-			        test('one.four.three');
-			        test('one.five.three');
-			        
-			        var output = '<p/>';
-			        output += 'one.two.three = ' + one.two.three + '<br/>';
-			        output += 'one.two.four = ' + one.two.four + '<br/>';
-			        output += 'one.three.three = ' + one.three.three + '<br/>';
-			        output += 'one.four.three = ' + one.four.three + '<br/>';
-			        output += 'one.five.three = ' + one.five.three + '<br/>';
-			        jQuery('.files').append(output);
-			    }
-			});
-		});
-		
-		function test(str) {
-			var regexp = /\./;
-			jQuery('.files').append(
-				'Expected: 0/true, result: ' +
-				regexp.lastIndex + '/' +
-				regexp.test(str) + '<br/>');
-		}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery.i18n.properties: Tests</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="content-script-type" content="text/javascript" />
 
-      </script>
-   </HEAD>
-   
-   <BODY>
-      <h2>jQuery.i18n.properties :: Tests</h2>
-      
-      <h4>checkKeyNamespace Test</h4>
-	  <code class="files" style="display:block !important"></code><br/>
-      
-   </BODY>
-</HTML>
+        <!-- JS -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="../jquery.i18n.properties.js"></script>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"> 
+        <!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+        <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen, projection">
+
+        <script type="text/javascript">
+            // load I18N bundles
+            jQuery(document).ready(function () {
+
+                jQuery.i18n.properties({
+                    name:'Messages',
+                    path:'./',
+                    mode:'both',
+                    //debug: true,
+                    callback: function () {
+
+                        var output = '<p/>';
+                        output += ($.i18n.prop('test.t1', 'p1') === "asdf 'p1'") ? 'Test 1 Succeeded' : 'Test 1 Failed';
+                        output += '<br/>';
+                        output += ($.i18n.prop('test.t2', 'p1') === "asdf {0} {1}{1}zxcv") ? 'Test 2 Succeeded' : 'Test 2 Failed';
+                        output += '<br/>';
+                        //output += ($.i18n.prop('test.t3', 'p1') === "This is \"a quote\" a'{0}'sd{fgh{ij") ? 'Test 3 Succeeded' : 'Test 3 Failed';
+                        //output += '<br/>';
+                        output += ($.i18n.prop('test.t4', 'p1') === "\"'{0}'\" p1{a}") ? 'Test 4 Succeeded' : 'Test 4 Failed';
+                        output += '<br/>';
+                        output += ($.i18n.prop('test.t5', 'p1') === "\"'{0}'\" {1}") ? 'Test 5 Succeeded' : 'Test 5 Failed';
+                        output += '<br/>';
+                        output += ($.i18n.prop('test.t6', 'p1') === "a {1} b p1 c") ? 'Test 6 Succeeded' : 'Test 6 Failed';
+                        output += '<br/>';
+                        output += ($.i18n.prop('test.t6', 'p1', 'p2') === "a p2 b p1 c") ? 'Test 7 Succeeded' : 'Test 7 Failed';
+                        output += '<br/>';
+                        output += ($.i18n.prop('test.t6', 'p1', 'p2', 'p3') === "a p2 b p1 c") ? 'Test 8 Succeeded' : 'Test 8 Failed';
+                        output += '<br/>';
+                        output += ($.i18n.prop('test.t7') === "a quoted \\ s    tringy       x") ? 'Test 9 Succeeded' : 'Test 9 Failed';
+                        output += '<br/>';
+                        output += ($.i18n.prop('test.t8') === "A multiline string") ? 'Test 10 Succeeded' : 'Test 10 Failed';
+                        output += '<br/>';
+                        output += ((one.two.three ===  'blah') ? 'Test 11 Succeeded' : 'Test 11 Failed') + '<br/>';
+                        output += ((one.two.four ===  'blah1') ? 'Test 12 Succeeded' : 'Test 12 Failed') + '<br/>';
+                        output += ((one.three.three ===  'blah2') ? 'Test 13 Succeeded' : 'Test 13 Failed') + '<br/>';
+                        output += ((one.four.three ===  'blah3') ? 'Test 14 Succeeded' : 'Test 14 Failed') + '<br/>';
+                        output += ((one.five.three ===  'blah4') ? 'Test 15 Succeeded' : 'Test 15 Failed') + '<br/>';
+                        jQuery('.files').append(output);
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h2>jQuery.i18n.properties :: Tests</h2>
+        <h4>checkKeyNamespace Test</h4>
+        <code class="files" style="display:block !important"></code><br/>
+    </body>
+</htmL>
