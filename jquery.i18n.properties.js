@@ -84,7 +84,7 @@
         if (!settings.path.match(/\/$/)) settings.path += '/';
 
         // Try to ensure that we have at a least a two letter language code
-        settings.language = this.normaliseLanguageCode(settings.language);
+        settings.language = this.normaliseLanguageCode(settings);
 
         // Ensure an array
         var files = (settings.name && settings.name.constructor === Array) ? settings.name : [settings.name];
@@ -261,7 +261,11 @@
             value = arr;
 
             // Make the array the value for the entry.
-            $.i18n.map[key] = arr;
+            if (namespace) {
+                $.i18n.map[settings.namespace][key] = arr;
+            } else {
+                $.i18n.map[key] = arr;
+            }
         }
 
         if (value.length === 0) {
@@ -469,11 +473,14 @@
     }
 
     /** Ensure language code is in the format aa_AA. */
-    $.i18n.normaliseLanguageCode = function (lang) {
+    $.i18n.normaliseLanguageCode = function (settings) {
 
+        var lang = settings.language;
         if (!lang || lang.length < 2) {
+            if (settings.debug) debug('No language supplied. Pulling it from the browser ...');
             lang = (navigator.languages && navigator.languages.length > 0) ? navigator.languages[0]
                                         : (navigator.language || navigator.userLanguage /* IE */ || 'en');
+            if (settings.debug) debug('Language from browser: ' + lang);
         }
 
         lang = lang.toLowerCase();
