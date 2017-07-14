@@ -338,6 +338,10 @@
                 async: settings.async,
                 cache: settings.cache,
                 dataType: 'text',
+                contentType: 'Content-type: text/plain; charset=' + settings.encoding,
+                beforeSend: function(jqXHR) {
+                    jqXHR.overrideMimeType('text/html;charset=' + settings.encoding);
+                },
                 success: function (data, status) {
 
                     if (settings.debug) {
