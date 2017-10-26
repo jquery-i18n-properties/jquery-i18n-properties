@@ -148,7 +148,7 @@
         }
 
         var value = (namespace) ? $.i18n.map[namespace][key] : $.i18n.map[key];
-        if (value === null) {
+        if (value === null || typeof value === 'undefined') {
             return '[' + ((namespace) ? namespace + '#' + key : key) + ']';
         }
 
