@@ -1,0 +1,17 @@
+*.git
+.git
+bundle
+css
+css
+node_modules
+tests
+bower.json
+compress.py
+index.html
+.gitignore
+.npmrc
+npm-debug.log
+
+# don't ignore .npmignore files
+# these are used in some tests.
+!.npmignore
