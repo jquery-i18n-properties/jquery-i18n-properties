@@ -383,7 +383,7 @@
                     // process multi-line values
                     while (value.search(/\\$/) != -1) {
                         value = value.substring(0, value.length - 1);
-                        value += lines[++i].trimRight();
+			value += lines[++i].replace(/\s+$/,"");
                     }
                     // Put values with embedded '='s back together
                     for (var s = 2; s < pair.length; s++) {
