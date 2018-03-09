@@ -134,6 +134,10 @@ If using Firefox and a Tomcat webapp, you may get a `syntax error` in the Javasc
 </mime-mapping>
 `
 
+If using Firefox and an Apache Webserver the same error can be fixed by adding
+`AddType text/plain .properties`
+to your .htaccess file.
+
 ### Building a minified JavaScript file
 
 1. Install the closure compiler tool:
