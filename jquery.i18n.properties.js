@@ -268,7 +268,7 @@
             }
         }
 
-        if (value.length === 0) {
+        if (!value || value.length === 0) {
             return "";
         }
         if (value.length == 1 && typeof(value[0]) == "string") {
